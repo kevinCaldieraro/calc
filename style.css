@@ -34,6 +34,7 @@ header {
   background-color: var(--bg-color);
   border: 0.125rem solid var(--font-color);
   color: var(--font-color);
+  cursor: pointer;
 }
 
 #themeSwitcher:hover {

@@ -34,6 +34,8 @@ document.querySelectorAll('.charKey').forEach(charKeyBtn => {
 
 document.getElementById('clear').addEventListener('click', () => {
   input.value = '';
+  resultInput.value = '';
+  resultInput.classList.remove('error');
   input.focus();
 });
 
@@ -55,8 +57,17 @@ input.addEventListener('keydown', ev => {
 document.getElementById('equal').addEventListener('click', calculate);
 
 function calculate() {
-  const result = eval(input.value);
-  resultInput.value = result;
+  if (input.value !== '') {
+    resultInput.value = 'ERROR';
+    resultInput.classList.add('error');
+
+    const result = eval(input.value);
+
+    resultInput.value = result;
+    resultInput.classList.remove('error');
+  } else {
+    alert('Coloque algum valor para ser calculado!');
+  }
 }
 
 document.getElementById('themeSwitcher').addEventListener('click', () => {
@@ -72,5 +83,17 @@ document.getElementById('themeSwitcher').addEventListener('click', () => {
     root.style.setProperty('--font-color', '#f1f5f9');
     root.style.setProperty('--primary-color', '#4dff91');
     main.dataset.theme = 'dark';
+  }
+});
+
+document.getElementById('copyToClipboard').addEventListener('click', ev => {
+  const button = ev.currentTarget;
+  if (button.innerText === 'Copy') {
+    button.innerText = 'Copied!';
+    button.classList.add('success');
+    navigator.clipboard.writeText(resultInput.value);
+  } else {
+    button.innerText = 'Copy';
+    button.classList.remove('success');
   }
 });
